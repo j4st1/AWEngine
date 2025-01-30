@@ -36,14 +36,6 @@ class AWEngineObject {
         std::vector<float> vn;
         std::vector<int> f;
 
-        float object_xpos;
-        float object_ypos;
-        float object_zpos;
-
-        float camera_xpos;
-        float camera_ypos;
-        float camera_zpos;
-
     private:
         glm::vec3 camera_pos;
         glm::vec3 camera_target;
@@ -54,7 +46,7 @@ class AWEngineObject {
         glm::vec3 camera_right;
         glm::vec3 camera_up;
 
-        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 model;
         glm::mat4 view;
         glm::mat4 projection;
 
@@ -78,7 +70,9 @@ class AWEngineObject {
 
     public:
         void set_camera_pos(glm::vec3 cam_pos, glm::vec3 camera_target);
-        void camera_movement(float* speed, GLFWwindow* window);
+        void camera_movement(float* speed, GLFWwindow* window, 
+                             double* cursor_last_x, double* cursor_last_y,
+                             double* cursor_x_pos, double* cursor_y_pos);
         void draw_object();
         void disable_object();
 };

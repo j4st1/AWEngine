@@ -4,6 +4,13 @@ void AWEngineWindow::framebuffer_size_callback(GLFWwindow* window, int width, in
     glViewport(0, 0, width, height);
 }
 
+double AWEngineWindow::cursor_x_pos = 0.0;
+double AWEngineWindow::cursor_y_pos = 0.0;
+void AWEngineWindow::mouse_position_callback(GLFWwindow* window, double x_pos, double y_pos){
+    cursor_x_pos = x_pos;
+    cursor_y_pos = y_pos;
+}
+
 void AWEngineWindow::create_window() {
 
     glfwWindowHint(GLFW_SAMPLES, 4);
@@ -30,4 +37,7 @@ void AWEngineWindow::create_window() {
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    glfwSetCursorPosCallback(window, mouse_position_callback);
 }

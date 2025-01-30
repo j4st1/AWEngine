@@ -13,8 +13,10 @@ int main() {
     // Test object
     glm::vec3 camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
     glm::vec3 camera_target = glm::vec3(0.0f, 0.0f, 0.0f);
-    float camera_speed = 1.0f;
+    float camera_speed = 0.05f;
+    AWEngineObject plane("obj/plane.obj");
     AWEngineObject cube("obj/cube.obj");
+    plane.set_camera_pos(camera_pos, camera_target);
     cube.set_camera_pos(camera_pos, camera_target);
 
     // Main loop
@@ -22,8 +24,13 @@ int main() {
         glClearColor(0.757f, 0.635f, 0.553f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        plane.draw_object();
         cube.draw_object();
-        cube.camera_movement(&camera_speed, engine_window.window);
+        plane.camera_movement(&camera_speed, engine_window.window, &engine_window.cursor_last_x_pos,
+                             &engine_window.cursor_last_y_pos, &engine_window.cursor_x_pos, &engine_window.cursor_y_pos);
+
+        cube.camera_movement(&camera_speed, engine_window.window, &engine_window.cursor_last_x_pos,
+                             &engine_window.cursor_last_y_pos, &engine_window.cursor_x_pos, &engine_window.cursor_y_pos);
 
         AWEnginePowerOFF(engine_window.window);
 
@@ -34,6 +41,7 @@ int main() {
 
     // Free memory
     cube.disable_object();
+    plane.disable_object();
     
     glfwTerminate();
 

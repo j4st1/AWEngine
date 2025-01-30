@@ -138,7 +138,7 @@ void AWEngineObject::create_shader_program(){
     shader_program = glCreateProgram();
     
     unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertex_src, nullptr);
+    glShaderSource(vertex_shader, 1, &vertex_src, NULL);
     glCompileShader(vertex_shader);
 
     // vertex shader compilation test
@@ -146,18 +146,18 @@ void AWEngineObject::create_shader_program(){
     char func_info_log[512];
     glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        glGetShaderInfoLog(vertex_shader, 512, nullptr, func_info_log);
+        glGetShaderInfoLog(vertex_shader, 512, NULL, func_info_log);
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << func_info_log << "\n";
     }
 
     unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragment_src, nullptr);
+    glShaderSource(fragment_shader, 1, &fragment_src, NULL);
     glCompileShader(fragment_shader);
 
     // fragment shader compilation test
     glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        glGetShaderInfoLog(fragment_shader, 512, nullptr, func_info_log);
+        glGetShaderInfoLog(fragment_shader, 512, NULL, func_info_log);
         std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << func_info_log << "\n";
     }
 
@@ -168,7 +168,7 @@ void AWEngineObject::create_shader_program(){
     // Link
     glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
     if (!success) {
-        glGetProgramInfoLog(shader_program, 512, nullptr, func_info_log);
+        glGetProgramInfoLog(shader_program, 512, NULL, func_info_log);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << func_info_log << "\n";
     }
 
@@ -184,7 +184,7 @@ void AWEngineObject::create_shader_program(){
     glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(float), v.data(), GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, f.size() * sizeof(unsigned int), f.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -200,17 +200,40 @@ void AWEngineObject::set_camera_pos(glm::vec3 cam_pos, glm::vec3 cam_target){
     camera_direction = glm::normalize(camera_pos - camera_target);
     camera_right = glm::normalize(glm::cross(up, camera_direction));
     camera_up = glm::cross(camera_direction, camera_right);
-    camera_front = glm::vec3(0.0f, 1.0f, 0.0f);
+    camera_front = glm::vec3(0.0f, 0.0f, 0.5f);
 
     view = glm::lookAt(camera_pos, camera_pos + camera_front, camera_up);
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::mat4(1.0f);
     projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
     std::cout << "Camera configure is done" << std::endl;
 }
 
-void AWEngineObject::camera_movement(float* speed, GLFWwindow* window){
+void AWEngineObject::camera_movement(float* speed, GLFWwindow* window,
+                                     double* cursor_last_x_pos, double* cursor_last_y_pos,
+                                     double* cursor_x_pos, double* cursor_y_pos){
     camera_speed = *speed;
+    double sensitivity = 0.05;
+    double yaw = 0.0;
+    double pitch = 0.0;
+
+    double xoffset = *cursor_x_pos - *cursor_last_x_pos;
+    double yoffset = *cursor_last_y_pos - *cursor_y_pos;
+    //*cursor_last_x_pos = *cursor_x_pos;
+    //*cursor_last_y_pos = *cursor_y_pos;
+
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    yaw += xoffset;
+    pitch += yoffset;
+
+    if(yaw > 70.0) yaw = 70.0;
+    if(pitch < -70.0) pitch = -70.0;
+
+    camera_front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    camera_front.y = sin(glm::radians(pitch));
+    camera_front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { 
         camera_pos += camera_speed * camera_front;
@@ -246,7 +269,7 @@ void AWEngineObject::draw_object(){
     glUseProgram(shader_program);
 
     view = glm::lookAt(camera_pos, camera_pos + camera_front, camera_up);
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
     int view_ptr = glGetUniformLocation(shader_program, "view");
     glUniformMatrix4fv(view_ptr, 1, GL_FALSE, glm::value_ptr(view));
@@ -258,6 +281,7 @@ void AWEngineObject::draw_object(){
     glUniformMatrix4fv(projection_ptr, 1, GL_FALSE, glm::value_ptr(projection));
 
     glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, f.size(), GL_UNSIGNED_INT, 0);
 }
 
 void AWEngineObject::disable_object(){
