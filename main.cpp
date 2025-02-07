@@ -1,104 +1,31 @@
-#include "engine/AWEngine.hpp"
+#include "AWengine.hpp"
 
-int main() {
+int main ( void ){
 
     GLFW_INIT_LIB
 
-    AWEngineWindow engine_window;
+    Window window;
 
     GLAD_INIT_LIB
 
-    glEnable(GL_DEPTH_TEST);
+    glEnable ( GL_DEPTH_TEST );
 
-    // Test object
-    glm::vec3 camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
-    glm::vec3 camera_target = glm::vec3(0.0f, 0.0f, 0.0f);
-    float camera_speed = 0.05f;
-    AWEngineObject plane("obj/plane.obj");
-    AWEngineObject cube("obj/cube.obj");
-    plane.set_camera_pos(camera_pos, camera_target);
-    cube.set_camera_pos(camera_pos, camera_target);
+    // Objects
+    Object cube ( "test_obj_files/cube.obj", "shaders/vertex.txt", "shaders/fragment.txt" );
 
-    // Main loop
-    while (!glfwWindowShouldClose(engine_window.window)) {
-        glClearColor(0.757f, 0.635f, 0.553f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    while ( !glfwWindowShouldClose(window.window) ) {
 
-        plane.draw_object();
-        cube.draw_object();
-        plane.camera_movement(&camera_speed, engine_window.window, &engine_window.cursor_last_x_pos,
-                             &engine_window.cursor_last_y_pos, &engine_window.cursor_x_pos, &engine_window.cursor_y_pos);
+        glClearColor ( 0.757f, 0.635f, 0.553f, 1.0f );
+        glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-        cube.camera_movement(&camera_speed, engine_window.window, &engine_window.cursor_last_x_pos,
-                             &engine_window.cursor_last_y_pos, &engine_window.cursor_x_pos, &engine_window.cursor_y_pos);
+        cube.draw_object ( );
 
-        AWEnginePowerOFF(engine_window.window);
-
-        glfwSwapBuffers(engine_window.window);
-        glfwPollEvents();
+        glfwSwapBuffers ( window.window );
+        glfwPollEvents ( );
     }
-    // End Main loop
 
-    // Free memory
-    cube.disable_object();
-    plane.disable_object();
+    glfwDestroyWindow ( window.window );
+    glfwTerminate ( );
     
-    glfwTerminate();
-
     return 0;
 }
-
-
-/*  glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(float), v.data(), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, f.size() * sizeof(unsigned int), f.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);*/
-
-    /*    std::stringstream ss(obj_src);
-    std::string token;
-    std::vector<std::string> vtmp;
-    std::vector<std::string> ftmp;
-
-    while(std::getline(ss, token, '\n')){
-        vtmp = split(token, ' ');
-
-        if(vtmp[0] == "v"){
-            v.push_back(std::stof(vtmp[1]));
-            v.push_back(std::stof(vtmp[2]));
-            v.push_back(std::stof(vtmp[3]));
-        }
-
-        if(vtmp[0] == "vt"){
-            vt.push_back(std::stof(vtmp[1]));
-            vt.push_back(std::stof(vtmp[2]));
-            vt.push_back(std::stof(vtmp[3]));
-        }
-
-        if(vtmp[0] == "vn"){
-            vn.push_back(std::stof(vtmp[1]));
-            vn.push_back(std::stof(vtmp[2]));
-            vn.push_back(std::stof(vtmp[3]));
-        }
-
-        if(vtmp[0] == "f"){
-            for(int i = 1; i < vtmp.size(); i++){
-                ftmp = split(vtmp[i], '/');
-                f.push_back(std::stoi(ftmp[0]) - 1);
-                
-                ftmp.clear();
-                ftmp.shrink_to_fit();
-            }
-        }
-
-        vtmp.clear();
-        vtmp.shrink_to_fit();*/
