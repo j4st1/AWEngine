@@ -20,15 +20,15 @@ class Window {
         int  win_width = 0;
         int  win_height = 0;
 
-        static double last_cursor_xpos;
-        static double last_cursor_ypos;
+        inline static double last_cursor_xpos;
+        inline static double last_cursor_ypos;
 
     public:
-        static double  cursor_xpos;
-        static double  cursor_ypos;
+        inline static double  cursor_xpos;
+        inline static double  cursor_ypos;
 
-        static double  camera_cursor_xpos;
-        static double  camera_cursor_ypos;
+        inline static double  camera_cursor_xpos;
+        inline static double  camera_cursor_ypos;
 
     public:
         Window ( ) {
@@ -41,6 +41,9 @@ class Window {
 
             cursor_xpos = 0.0;
             cursor_ypos = 0.0;
+
+            camera_cursor_xpos = 0.0;
+            camera_cursor_ypos = 0.0;
 
             create_window ( );
         }

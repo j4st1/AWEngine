@@ -19,3 +19,7 @@ void Camera::set_camera_settings ( glm::vec3 camera_pos, glm::vec3 camera_target
 
 }
 
+void Camera::camera_movement ( void ) {
+
+    
+}

@@ -15,17 +15,17 @@ void Object::set_object_position ( double object_x_pos, double object_y_pos, dou
 
 }
 
-void Object::draw_object ( void ) { 
+void Object::draw_object ( glm::mat4 view, glm::mat4 projection ) { 
     
     glUseProgram ( shader_program );
 
-    glUniformMatrix4fv(model_ptr, 1, GL_FALSE, glm::value_ptr(Camera::model));
+    glUniformMatrix4fv ( Shader::shdr_model_mat_ptr, 1, GL_FALSE, glm::value_ptr ( model ) );
 
-    glUniformMatrix4fv(view_ptr, 1, GL_FALSE, glm::value_ptr(Camera::view));
+    glUniformMatrix4fv ( Shader::shdr_view_mat_ptr, 1, GL_FALSE, glm::value_ptr ( view) );
 
-    glUniformMatrix4fv(projection_ptr, 1, GL_FALSE, glm::value_ptr(Camera::projection));
+    glUniformMatrix4fv ( Shader::shdr_projection_mat_ptr, 1, GL_FALSE, glm::value_ptr ( projection ) );
 
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, f.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray ( VAO );
+    glDrawElements ( GL_TRIANGLES, f.size(), GL_UNSIGNED_INT, 0 );
 
 }

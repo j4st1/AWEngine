@@ -8,6 +8,9 @@
 
 #include "../thirdparty/GLM/glm/glm.hpp"
 #include "../thirdparty/GLM/glm/gtc/matrix_transform.hpp"
+#include "../thirdparty/GLM/glm/gtc/type_ptr.hpp"
+
+#include "../thirdparty/GLFW3/include/GLFW/glfw3.h"
 
 class Camera {
 
@@ -60,5 +63,5 @@ class Camera {
         
     public:
         void set_camera_settings ( glm::vec3 camera_pos, glm::vec3 camera_target, double camera_speed, double camera_sensitivity );
-
+        void camera_movement ( void );
 }; 
