@@ -1,29 +1,39 @@
-#include "AWengine.hpp"
+#include "engine/engine.hpp"
 
-int main ( void ){
+int main ( void ) {
 
-    GLFW_INIT_LIB
+    ENGINE_INIT
+    //window.setWindowResolution ( 1280, 1024 );
 
-    Window window;
-
-    GLAD_INIT_LIB
-
-    glEnable ( GL_DEPTH_TEST );
-
-    Camera camera;
+    // Camera & Camera settings
+    Camera  camera;
+    camera.setAspectRatio ( window.ASPECT_RATIO );
+    double  cameraSensitivity = 0.01;
 
     // Objects
-    Object cube ( "test_obj_files/cube.obj", "shaders/vertex.txt", "shaders/fragment.txt" );
+    Object  cube ( "test_obj_files/cube.obj", "engine/shaders/vertex.txt", "engine/shaders/fragment.txt" );
+    Object  cube1 ( "test_obj_files/cube.obj", "engine/shaders/vertex.txt", "engine/shaders/fragment.txt" );
+    Object  plane ( "test_obj_files/plane.obj", "engine/shaders/vertex.txt", "engine/shaders/fragment.txt" );
 
-    while ( !glfwWindowShouldClose(window.window) ) {
+    cube1.setObjectPosition ( 5.0, 3.0, -3.0 );
+    plane.setObjectPosition ( 5.0, -3.0, 0.0 );
+
+    while ( !glfwWindowShouldClose ( window.window ) ) {
 
         glClearColor ( 0.757f, 0.635f, 0.553f, 1.0f );
         glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-        cube.draw_object ( camera.view, camera.projection );
+
+        camera.cameraSensitivity = cameraSensitivity * deltaTime ( );
+        camera.cameraMovement ( window.cursorPos, window.lastCursorPos );
+
+        cube.drawObject ( camera.view, camera.projection );
+        cube1.drawObject ( camera.view, camera.projection );
+        plane.drawObject ( camera.view, camera.projection );
 
         glfwSwapBuffers ( window.window );
         glfwPollEvents ( );
+        
     }
 
     glfwDestroyWindow ( window.window );

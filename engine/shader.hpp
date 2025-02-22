@@ -7,7 +7,7 @@
 #pragma once
 
 #include "../thirdparty/GLAD/include/glad/glad.h"
-#include "../devtools/devtools.hpp"
+#include "engineTools.hpp"
 #include <vector>
 
 class Shader {
@@ -44,22 +44,22 @@ class Shader {
             this -> path_to_vshader = path_to_vshader;
             this -> path_to_fshader = path_to_fshader;
 
-            vertex_src = filereader ( path_to_vshader );
-            fragment_src = filereader ( path_to_fshader );
+            vertex_src = fileReader ( path_to_vshader );
+            fragment_src = fileReader ( path_to_fshader );
 
-            obj_src = filereader ( path_to_object_model );
-            obj_parser ( obj_src, v, vt, vn, f );
+            obj_src = fileReader ( path_to_object_model );
+            objParser ( obj_src, v, vt, vn, f );
 
             create_shader_program ( );
             bind_buffers ( );
 
-            int view_ptr = glGetUniformLocation ( shader_program, "view" );
-            int model_ptr = glGetUniformLocation ( shader_program, "model" );
-            int projection_ptr = glGetUniformLocation ( shader_program, "projection" );
+            shdr_view_mat_ptr = glGetUniformLocation ( shader_program, "view" );
+            shdr_model_mat_ptr = glGetUniformLocation ( shader_program, "model" );
+            shdr_projection_mat_ptr = glGetUniformLocation ( shader_program, "projection" );
 
         }
 
-        ~Shader ( ) { };
+        ~Shader ( ) = default;
 
     private:
         void create_shader_program ( void );

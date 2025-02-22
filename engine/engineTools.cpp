@@ -4,10 +4,9 @@
 //                                                                                      //        
 // ************************************************************************************ //
 
+#include  "engineTools.hpp"
 
-#include  "devtools.hpp"
-
-char* filereader ( const char* filename ) {
+char*  fileReader  ( const char* filename ) {
 
     std::cout << filename << std::endl;
 
@@ -63,7 +62,7 @@ std::vector<std::string>  split  ( std::string& str, char split_char ) {
 
 }
 
-void  obj_parser  ( char* obj_src, std::vector<float>& v, std::vector<float>& vt, std::vector<float>& vn, std::vector<unsigned int>& f ){
+void  objParser  ( char* obj_src, std::vector<float>& v, std::vector<float>& vt, std::vector<float>& vn, std::vector<unsigned int>& f ){
 
     std::stringstream ss( obj_src );
     std::string tmp;
@@ -137,4 +136,14 @@ void  obj_parser  ( char* obj_src, std::vector<float>& v, std::vector<float>& vt
 
     std::cout << "Parse obj is done\n" << std::endl;
     
-}   
+} 
+
+double  deltaTime  ( void ) {
+
+    static double lastFrame = glfwGetTime();
+    double currentFrame = glfwGetTime();
+    double deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    return deltaTime;
+
+}

@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories(${CMAKE_SOURCE_DIR}/engine)
 
 # Add executable
-add_executable(AWEngine main.cpp render/window.cpp render/shader.cpp render/object.cpp devtools/devtools.cpp)
+add_executable ( AWEngine main.cpp engine/engineTools.cpp engine/shader.cpp engine/object.cpp engine/window.cpp engine/camera.cpp )
 
 target_include_directories(AWEngine PRIVATE
     ${CMAKE_SOURCE_DIR}/thirdparty/GLAD/include
