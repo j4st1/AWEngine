@@ -21,7 +21,7 @@ void Object::draw_object ( glm::mat4 view, glm::mat4 projection ) {
 
     glUniformMatrix4fv ( Shader::shdr_model_mat_ptr, 1, GL_FALSE, glm::value_ptr ( model ) );
 
-    glUniformMatrix4fv ( Shader::shdr_view_mat_ptr, 1, GL_FALSE, glm::value_ptr ( view) );
+    glUniformMatrix4fv ( Shader::shdr_view_mat_ptr, 1, GL_FALSE, glm::value_ptr ( view ) );
 
     glUniformMatrix4fv ( Shader::shdr_projection_mat_ptr, 1, GL_FALSE, glm::value_ptr ( projection ) );
 

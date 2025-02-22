@@ -70,6 +70,6 @@ void Shader::bind_buffers ( void ) {
     glBindVertexArray ( 0 );
     glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
-    std::cout << "buffers bind is done";
+    std::cout << "buffers bind is done" << std::endl;
     
 }

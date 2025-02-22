@@ -7,15 +7,15 @@
 
 #include  "devtools.hpp"
 
-char*  filereader  ( const char* filename ) {
+char* filereader ( const char* filename ) {
 
     std::cout << filename << std::endl;
 
-    FILE* file = fopen(filename, "r");
+    FILE* file = fopen (filename, "rb");
 
-    if (!file) {    perror("ERROR to open");    return NULL;    }
+    if (!file) { perror( "ERROR to open" ); return NULL; }
 
-    fseek(file, 0, SEEK_END);
+    fseek ( file, 0, SEEK_END );
 
     long file_size = ftell(file);
 
