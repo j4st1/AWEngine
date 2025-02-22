@@ -2,3 +2,7 @@
 build/*
 CMakeFiles/
 Debug/
+test_obj_files/
+AWEngine
+main.cpp
+
