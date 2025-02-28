@@ -7,7 +7,7 @@
 
 #include "shader.hpp"
 
-void Shader::create_shader_program( void ) {
+void  Shader::create_shader_program  ( void ) {
 
     shader_program = glCreateProgram ( );
 
@@ -57,7 +57,7 @@ void Shader::create_shader_program( void ) {
 
 }
 
-void Shader::bind_buffers ( void ) {
+void  Shader::bind_buffers  ( void ) {
 
     glGenVertexArrays ( 1, &VAO );
     glGenBuffers ( 1, &VBO );
@@ -65,15 +65,23 @@ void Shader::bind_buffers ( void ) {
 
     glBindVertexArray ( VAO );
     glBindBuffer ( GL_ARRAY_BUFFER, VBO );
-    glBufferData ( GL_ARRAY_BUFFER, v.size() * sizeof ( float ), v.data(), GL_STATIC_DRAW );
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData ( GL_ARRAY_BUFFER, v.size ( ) * sizeof ( float ), v.data ( ), GL_STATIC_DRAW );
+    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, EBO );
     glBufferData ( GL_ELEMENT_ARRAY_BUFFER, f.size ( ) * sizeof ( unsigned int ), f.data ( ), GL_STATIC_DRAW );
     glVertexAttribPointer ( 0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof ( float ), NULL );
     glEnableVertexAttribArray ( 0 );
-    glBindBuffer ( GL_ARRAY_BUFFER, 0 );
-    glBindVertexArray ( 0 );
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
     std::cout << "buffers bind is done" << std::endl;
     
+}
+
+void  Shader::delete_buffers  ( void ) { 
+
+    if ( VAO, VBO, EBO, shader_program ) {
+
+        glDeleteVertexArrays ( 1, &VAO );
+        glDeleteBuffers ( 1, &VBO );
+        glDeleteBuffers ( 1, &EBO );
+        shader_program = 0;
+    }
 }

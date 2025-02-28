@@ -34,5 +34,5 @@ class Object : public Shader {
 
     public:
         void setObjectPosition ( double object_x_pos, double object_y_pos, double object_z_pos );
-        void drawObject ( glm::mat4 view, glm::mat4 projection );
+        void drawObject ( glm::mat4& view, glm::mat4& projection );
 };

@@ -12,6 +12,8 @@
 
 #include "../thirdparty/GLFW3/include/GLFW/glfw3.h"
 
+#include "engineTools.hpp"
+
 #include <iostream>
 
 
@@ -23,13 +25,10 @@ class Camera {
         glm::vec3  cameraDirection = glm::normalize ( cameraPos - cameraTarget );
         double  cameraSensitivity = 0.0;
 
-        glm::vec2  angles = glm::vec2 ( 0.0, 0.0 );
-        glm::vec2  radAngles = glm::vec2 ( 0.0, 0.0 );
+        glm::vec2  angles = glm::vec2 ( -90.0, 0.0 );
         glm::vec2  offset = glm::vec2 ( 0.0, 0.0 );
-        double aspectRatio = 0.0;
-
-    private:
-        bool firstMouse = true;
+        int  fov = 70.0;
+        double  aspectRatio = 0.0;
 
     private:
         glm::vec3  cameraFront = glm::vec3 ( 0.0, 0.0, -1.0 );
@@ -38,7 +37,7 @@ class Camera {
 
     public:
         glm::mat4  view = glm::lookAt ( cameraPos, cameraPos + cameraFront, cameraUp );
-        glm::mat4  projection = glm::perspective ( glm::radians ( 45.0 ), 1920.0 / 1080.0, 0.1, 100.0 );
+        glm::mat4  projection = glm::perspective ( glm::radians ( ( double ) fov ), 1920.0 / 1080.0 , 0.1, 100.0 );
 
     public:
         Camera ( ) { }   
@@ -49,8 +48,8 @@ class Camera {
         
         
     public:
-        void  setCameraSettings ( glm::vec3 cameraPos, glm::vec3 cameraTarget, double cameraSensitivity );
-        void  cameraMovement ( glm::vec2 cursorPos, glm::vec2 lastCursorPos );
-        inline void  setAspectRatio ( double aspectRatio ) { this -> aspectRatio = aspectRatio; }
+        void  setCameraSettings  ( glm::vec3 cameraPos, glm::vec3 cameraTarget, double cameraSensitivity );
+        void  cameraMovement  ( glm::vec2* cursorPos, glm::vec2* lastCursorPos );
+        void  setFov  ( int  fov );
     
 };

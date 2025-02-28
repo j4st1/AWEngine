@@ -15,5 +15,5 @@
 
 #define  ENGINE_INIT  if ( !glfwInit ( ) ) { std::cout << "Failed to initialize GLFW\n"; exit ( -1 ); } \
                       Window window; \
-                      if ( !gladLoadGLLoader ( ( GLADloadproc ) glfwGetProcAddress) ) { std::cout << "Failed to initialize GLAD\n"; exit ( -1); } \
+                      if ( !gladLoadGLLoader ( ( GLADloadproc ) glfwGetProcAddress ) ) { std::cout << "Failed to initialize GLAD\n"; exit ( -1); } \
                       glEnable ( GL_DEPTH_TEST ); 

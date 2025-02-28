@@ -15,7 +15,7 @@ void Object::setObjectPosition ( double object_x_pos, double object_y_pos, doubl
 
 }
 
-void Object::drawObject ( glm::mat4 view, glm::mat4 projection ) { 
+void Object::drawObject ( glm::mat4& view, glm::mat4& projection ) { 
     
     glUseProgram ( shader_program );
 
@@ -27,6 +27,6 @@ void Object::drawObject ( glm::mat4 view, glm::mat4 projection ) {
 
     glBindVertexArray ( VAO );
     
-    glDrawElements ( GL_TRIANGLES, f.size(), GL_UNSIGNED_INT, 0 );
+    glDrawElements ( GL_TRIANGLES, f.size ( ), GL_UNSIGNED_INT, 0 );
 
 }

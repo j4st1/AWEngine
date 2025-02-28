@@ -16,13 +16,15 @@ class Window {
         GLFWwindow*  window;
         GLFWmonitor*  primary_monitor = glfwGetPrimaryMonitor ( );
         const  GLFWvidmode*  mode = glfwGetVideoMode ( primary_monitor );
+        GLFWcursor* window_cursor = glfwCreateStandardCursor ( GLFW_CROSSHAIR_CURSOR );
 
     private:
-        int  WIN_WIDTH = 0;
-        int  WIN_HEIGHT = 0;
+        inline int  static WIN_WIDTH = 0;
+        inline int  static WIN_HEIGHT = 0;
 
     public:
         double  ASPECT_RATIO = 0.0;
+        inline  static  glm::vec2  centredCursorPos;
         inline  static  glm::vec2  lastCursorPos;
         inline  static  glm::vec2  cursorPos;
         inline  static  glm::vec2  cameraCursorPos;
@@ -32,13 +34,16 @@ class Window {
             
             WIN_WIDTH = mode -> width;
             WIN_HEIGHT = mode -> height;
-            ASPECT_RATIO = (double)WIN_WIDTH / (double)WIN_HEIGHT;
+            ASPECT_RATIO = ( double ) WIN_WIDTH / ( double ) WIN_HEIGHT;
 
-            lastCursorPos.x = WIN_WIDTH / 2.0;
-            lastCursorPos.y = WIN_HEIGHT / 2.0;
+            centredCursorPos.x = ( double ) WIN_WIDTH / 2.0;
+            centredCursorPos.y = ( double ) WIN_HEIGHT / 2.0;
 
-            cursorPos.x = 0.0;
-            cursorPos.y = 0.0;
+            lastCursorPos.x = ( double ) WIN_WIDTH / 2.0;
+            lastCursorPos.y = ( double ) WIN_HEIGHT / 2.0;
+
+            cursorPos.x = ( double ) WIN_WIDTH / 2.0;
+            cursorPos.y = ( double ) WIN_HEIGHT / 2.0;
 
             create_window ( );
         }
@@ -47,13 +52,13 @@ class Window {
 
             WIN_WIDTH = WINDOW_WIDTH;
             WIN_HEIGHT = WINDOW_HEIGHT;
-            ASPECT_RATIO = (double)WIN_WIDTH / (double)WIN_HEIGHT;
+            ASPECT_RATIO = ( double ) WIN_WIDTH / ( double ) WIN_HEIGHT;
 
-            lastCursorPos.x = WIN_WIDTH / 2.0;
-            lastCursorPos.y = WIN_HEIGHT / 2.0;
+            lastCursorPos.x = ( double ) WIN_WIDTH / 2.0;
+            lastCursorPos.y = ( double ) WIN_HEIGHT / 2.0;
 
-            cursorPos.x = 0.0;
-            cursorPos.y = 0.0;
+            cursorPos.x = ( double ) WIN_WIDTH / 2.0;
+            cursorPos.y = ( double ) WIN_HEIGHT / 2.0;
 
             create_window ( WIN_WIDTH, WIN_HEIGHT );
         }

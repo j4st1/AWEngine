@@ -13,12 +13,12 @@
 class Shader {
 
     public:
-        unsigned int  VBO = 0;
-        unsigned int  VAO = 0;
-        unsigned int  EBO = 0;
-        unsigned int  shader_program = 0;
-        unsigned int  vertex_shader = 0;
-        unsigned int  fragment_shader = 0;
+        unsigned  int  VBO = 0;
+        unsigned  int  VAO = 0;
+        unsigned  int  EBO = 0;
+        unsigned  int  shader_program = 0;
+        unsigned  int  vertex_shader = 0;
+        unsigned  int  fragment_shader = 0;
 
         int  shdr_view_mat_ptr = 0;
         int  shdr_model_mat_ptr = 0;
@@ -28,14 +28,14 @@ class Shader {
         char*  fragment_src;
         char*  obj_src;
 
-        const char*  path_to_vshader;
-        const char*  path_to_fshader;
-        const char*  path_to_object_model;
+        const  char*  path_to_vshader;
+        const  char*  path_to_fshader;
+        const  char*  path_to_object_model;
 
-        std::vector <float>  v;
-        std::vector <float>  vt;
-        std::vector <float>  vn;
-        std::vector <unsigned int>  f;
+        std::vector  <float>  v;
+        std::vector  <float>  vt;
+        std::vector  <float>  vn;
+        std::vector <unsigned  int>  f;
 
     public:
         Shader ( const char* path_to_object_model, const char* path_to_vshader, const char* path_to_fshader ) {
@@ -62,6 +62,9 @@ class Shader {
         ~Shader ( ) = default;
 
     private:
-        void create_shader_program ( void );
-        void bind_buffers ( void );
+        void  create_shader_program  ( void );
+        void  bind_buffers  ( void );
+
+    public:
+        void  delete_buffers  ( void );
 };
