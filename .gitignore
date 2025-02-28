@@ -13,6 +13,7 @@ cmake_install.cmake
 Makefile
 
 
+main.cpp
 *.o
 *.a
 *.so
